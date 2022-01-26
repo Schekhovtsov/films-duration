@@ -7,9 +7,9 @@ import { FilmsTable } from 'features/table';
 
 const Films: FC = () => {
 
-    const { fetchTopRated, films} = filmsStore;
+    const { fetchTopRated, films, isLoading} = filmsStore;
 
-    const test = films.filter((f: IFilm) => f.vote_count > 10000)
+    //const test = films.filter((f: IFilm) => f.vote_count > 10000)
 
 
     const columns: any = [
@@ -37,7 +37,7 @@ const Films: FC = () => {
         },
     ];
 
-    const newData: any = test.map((film: IFilm, index) => ({
+    const newData: any = films.map((film: IFilm, index: number) => ({
         key: `${film}_${index}`,
         title: film.title,
         rate_value: film.vote_average,
@@ -51,7 +51,7 @@ const Films: FC = () => {
         <div>
 
             {
-                (test) && <FilmsTable columns={columns} data={newData} />
+                (!isLoading && films) && <FilmsTable columns={columns} data={newData} />
             }
 
         </div>

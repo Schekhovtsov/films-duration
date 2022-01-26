@@ -15,64 +15,31 @@ export interface IFilm {
 class FilmsStore {
 
     isLoading = false
-    filmsID = []
-    films = []
+    filmsID: any = []
+    films: any = []
 
     constructor() {
-        //this.films = []
         makeAutoObservable(this)
     }
-
 
     fetchTopRated = async () => {
         try {
             this.isLoading = true
             const response = await api.getTopRated();
-            runInAction(() => {
-                this.filmsID = response.data.results.map(
-                    (film: IFilm) => {
-                        return film.id
-                    }
-                );
 
-                //debugger
+            this.filmsID = response.data.results.map(
+                (film: IFilm) => {
+                    return film.id
+                }
+            );
 
-                let filmsArray: any = this.filmsID.map(async id => {
-                        const response = await api.getSpecificFilm(id);
-                        runInAction(() => {
+            for await (let id of this.filmsID) {
+                const response = await api.getSpecificFilm(id);
+                this.films = [...this.films, response.data];
+            }
 
-                            this.films = this.films.concat(response.data);
+            //this.films = this.films.filter((film: IFilm) => film.vote_count > 20000)
 
-                            /*this.films.sort(function(a: any, b: any) {
-                                return b.runtime - a.runtime
-                            })*/
-
-                        })
-
-                    }
-                )
-
-                runInAction(() => {
-
-                    this.films = filmsArray.sort(function(a: any, b: any) {
-                        return b.runtime - a.runtime
-                    })
-
-                    let test = this.films
-                        .filter((film: IFilm) => {
-                            return film.runtime > 150
-                        })
-                        ;
-                    debugger
-                    this.films = test;
-
-                   console.log(toJS(this.films))
-                    debugger
-
-                })
-
-
-            });
             if (!response) return console.log('Response was empty')
         }   catch (e) {
             console.log(e)
@@ -81,39 +48,15 @@ class FilmsStore {
         }
     }
 
-    // есть массив [123, 456, 56]
-    // Нужно на каждую итерацию массива выполнить запрос на сервер
-
-    getSort = () => {
-
-
-
-        debugger
-    }
-
-
-    sort = () => {
-
-        this.films
-/*            .sort(function (a: any, b: any) {
-                return a.vote_count.localeCompare(b.vote_count);
-            })*/
-            .forEach((film: IFilm) => {
-                if (film.vote_count > 10000) {
-                    console.log(film.title)
-                }
-            });
-
+    get getSortedFilms() {
+        //return this.films = this.films.filter((film: IFilm) => film.vote_count > 20000)
+        return this.films = []
     }
 
 }
 
-
-
 export const filmsStore = new FilmsStore()
 
 autorun(() => {
-
-    filmsStore.fetchTopRated()
-    debugger
+    filmsStore.fetchTopRated();
 })
