@@ -7,7 +7,7 @@ import { FilmsTable } from 'features/table';
 
 const Films: FC = () => {
 
-    const { fetchTopRated, films, isLoading} = filmsStore;
+    const { fetchTopRatedIDs, films, isLoading} = filmsStore;
 
     //const test = films.filter((f: IFilm) => f.vote_count > 10000)
 

@@ -18,45 +18,75 @@ class FilmsStore {
     filmsID: any = []
     films: any = []
 
+
+
     constructor() {
         makeAutoObservable(this)
     }
 
-    fetchTopRated = async () => {
+    fetchTopRatedIDs = async (page = 1) => {
+
         try {
             this.isLoading = true
-            const response = await api.getTopRated();
 
-            this.filmsID = response.data.results.map(
+            const response1 = await api.getTopRated(1);
+
+            const responseData1 = response1.data.results.map(
                 (film: IFilm) => {
                     return film.id
                 }
-            );
+            )
+
+            const response2 = await api.getTopRated(2);
+
+            const responseData2 = response2.data.results.map(
+                (film: IFilm) => {
+                    return film.id
+                }
+            )
+
+            this.filmsID = [...responseData1, ...responseData2];
+
+            this.fetchDetails()
+
+/*            if (this.filmsID.length > 0) {
+                const newBatch = [...this.filmsID, responseData];
+                this.filmsID = [].concat.apply([], newBatch);
+            }   else    {
+                this.filmsID = responseData;
+            }*/
+
+            //this.films = this.films.filter((film: IFilm) => film.vote_count > 20000)
+
+            //if (!response) return console.log('Response was empty')
+        }   catch (e) {
+            console.log(e)
+        }   finally {
+            console.log(toJS(this.filmsID))
+        }
+    }
+
+    fetchDetails = async () => {
+
+        try {
 
             for await (let id of this.filmsID) {
                 const response = await api.getSpecificFilm(id);
                 this.films = [...this.films, response.data];
             }
 
-            //this.films = this.films.filter((film: IFilm) => film.vote_count > 20000)
-
-            if (!response) return console.log('Response was empty')
         }   catch (e) {
             console.log(e)
         }   finally {
             this.isLoading = false;
+            this.films.map((film: IFilm) => console.log(film.title))
         }
     }
-
-    get getSortedFilms() {
-        //return this.films = this.films.filter((film: IFilm) => film.vote_count > 20000)
-        return this.films = []
-    }
-
 }
 
 export const filmsStore = new FilmsStore()
 
 autorun(() => {
-    filmsStore.fetchTopRated();
-})
+    filmsStore.fetchTopRatedIDs(1);
+
+});
