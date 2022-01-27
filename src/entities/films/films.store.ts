@@ -26,18 +26,74 @@ class FilmsStore {
 
     fetchTopRatedIDs = async (page = 1) => {
 
+
+
         try {
             this.isLoading = true
 
-            const response1 = await api.getTopRated(1);
+            let names = [1, 2, 3];
 
-            const responseData1 = response1.data.results.map(
+            let requests = names.map(page => api.getTopRated(page));
+            //console.log('requests2',requests2)
+            let test: any = []
+
+            Promise.all(requests)
+                .then(responses => Promise.all(responses.map(r => {
+                    r.data.results.map((film: IFilm) => {
+                        test = [...test, film.id]
+                    })
+                    //test = [...test, r.data.results]
+                })))
+                .then(() => {
+                    //let merged = [].concat.apply([], test);
+                    this.films = test
+                    console.log('merged', test.flat(Infinity))
+                    //this.fetchDetails()
+                })
+
+
+            //console.log('test results: ', this.test);
+
+            /*
+
+
+            Promise.all(requests)
+                .then(responses => {
+                    // все промисы успешно завершены
+                    for(let response of responses) {
+                        alert(`${response.url}: ${response.status}`); // покажет 200 для каждой ссылки
+                    }
+
+                    return responses;
+                })
+                // преобразовать массив ответов response в response.json(),
+                // чтобы прочитать содержимое каждого
+                .then(responses => Promise.all(responses.map(r => r.json())))
+                // все JSON-ответы обработаны, users - массив с результатами
+                .then(users => users.forEach(user => alert(user.name)));*/
+
+
+
+
+
+            /*const results = await Promise.all([
+                api.getTopRated(1),
+                api.getTopRated(2)
+            ])
+
+            console.log(results)*/
+
+
+
+
+
+/*            const responseData1 = response1.data.results.map(
                 (film: IFilm) => {
                     return film.id
                 }
-            )
+            )*/
 
-            const response2 = await api.getTopRated(2);
+            /*const response2 = await api.getTopRated(2);
 
             const responseData2 = response2.data.results.map(
                 (film: IFilm) => {
@@ -46,8 +102,10 @@ class FilmsStore {
             )
 
             this.filmsID = [...responseData1, ...responseData2];
+            */
+             /*this.films = responseData1*/
 
-            this.fetchDetails()
+            //this.fetchDetails()
 
 /*            if (this.filmsID.length > 0) {
                 const newBatch = [...this.filmsID, responseData];
@@ -62,7 +120,7 @@ class FilmsStore {
         }   catch (e) {
             console.log(e)
         }   finally {
-            console.log(toJS(this.filmsID))
+            //console.log(toJS(this.filmsID))
         }
     }
 
