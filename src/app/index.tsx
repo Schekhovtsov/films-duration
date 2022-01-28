@@ -12,10 +12,22 @@ function App() {
       margin: 50px;
     `
 
+    const Wrapper = styled.div`
+      margin: 0 auto;
+      width: 100%; // Телефон
+      @media (min-width: 990px) {
+        width: 90%; // Компьютер
+      }
+      @media (min-width: 1400px) {
+        width: 70%; // Компьютер
+      }
+    `
+
+
     return (
 
-        <Layout>
-
+        <Layout >
+            <Wrapper>
             <Header>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key={1}>Home</Menu.Item>
@@ -29,7 +41,7 @@ function App() {
             </Content>
 
             <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
-
+            </Wrapper>
         </Layout>
     );
 }

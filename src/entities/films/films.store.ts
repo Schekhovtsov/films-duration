@@ -9,7 +9,7 @@ export interface IFilm {
     poster_path: string,
     release_date: string,
     runtime: number,
-    popularity: number
+    popularity: number,
 }
 
 class FilmsStore {
@@ -17,8 +17,6 @@ class FilmsStore {
     isLoading = false
     filmsID: any = []
     films: any = []
-
-
 
     constructor() {
         makeAutoObservable(this)
