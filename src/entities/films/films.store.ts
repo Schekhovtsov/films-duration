@@ -24,16 +24,18 @@ class FilmsStore {
         makeAutoObservable(this)
     }
 
-    fetchTopRatedIDs = async (page = 1) => {
-
-
+    fetchTopRatedIDs = async (pages = 1) => {
 
         try {
             this.isLoading = true
 
-            let names = [1, 2, 3];
+            let pagesArray: number[] = []
 
-            let requests = names.map(page => api.getTopRated(page));
+            for (let i = 1; i <= pages; i++) {
+                pagesArray.push(i)
+            }
+
+            let requests = pagesArray.map(page => api.getTopRated(page));
 
             let temp: any = []
 
@@ -45,7 +47,6 @@ class FilmsStore {
             })
 
             this.filmsID = temp
-            console.log('merged', temp.flat(Infinity))
 
             this.fetchDetails()
 
@@ -64,11 +65,16 @@ class FilmsStore {
                 this.films = [...this.films, response.data];
             }
 
+            this.films = this.films
+                .filter((film: IFilm) => film.vote_count > 5000)
+                .sort(function (a: IFilm, b: IFilm) {
+                    return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
+                });
+
         }   catch (e) {
             console.log(e)
         }   finally {
             this.isLoading = false;
-            this.films.map((film: IFilm) => console.log(film.title))
         }
     }
 }
@@ -76,6 +82,5 @@ class FilmsStore {
 export const filmsStore = new FilmsStore()
 
 autorun(() => {
-    filmsStore.fetchTopRatedIDs(1);
-
+    filmsStore.fetchTopRatedIDs(3);
 });
