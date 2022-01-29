@@ -1,29 +1,35 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Films from 'entities/films';
-
-import {Divider, Typography} from "antd";
 import styled from 'styled-components';
-const { Title } = Typography;
+
+import {Divider, Typography, List, Card, Input} from "antd";
+import { Link } from 'react-router-dom';
+import {filmsStore} from "../../entities/films/films.store";
+import FilmsPage from "../films";
+const { Title, Paragraph } = Typography;
+const { Search } = Input;
 
 
 
 const HomePage: FC = () => {
 
-    const MenuWrapper = styled.div`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
+
+
+    const Text_Big = styled.div`
+      font-size: 16pt;
     `;
 
-    const Block = styled.div`
-        margin: 0 10px 0 0;
-        padding: 10px;
-        width: 350px;
-        height: 400px;
-        background-color: azure;
-        border: 3px solid azure;
+    const Text_Small = styled.div`
+        font-size: 14pt;
+      padding: 10px 0;
     `;
+
+    const [wasSearched, setWasSearched] = useState(false);
+
+    const onSearch = (title: string) => {
+        filmsStore.getFilmsBySearch(title)
+        setWasSearched(true)
+    }
 
     return (
         <div>
@@ -31,20 +37,37 @@ const HomePage: FC = () => {
                 Welcome to Films Duration
             </Title>
 
-            <Title level={4}>
+            <Text_Big>
                 On this site you can find out the duration of the films
-            </Title>
+            </Text_Big>
 
             <Divider dashed />
 
-            <MenuWrapper>
-                <Block>123</Block>
-                <Block>123</Block>
-                <Block>123</Block>
-            </MenuWrapper>
+            <List
+                grid={{ gutter: 16, column: 2 }}
+                dataSource={[
+                    {
+                        title: 'Find out the duration of the movie',
+                        content: <Search
+                            placeholder="Enter the name of the movie"
+                            allowClear
+                            enterButton="Search"
+                            size="large"
+                            onSearch={onSearch}
+                        />,
+                    },
+                ]}
+                renderItem={item => (
+                    <List.Item>
+                        <Card style={{height: '150px'}}
+                              title={item.title}>{item.content}</Card>
+                    </List.Item>
+                )}
+            />
 
-
-            <Films />
+            {
+                wasSearched && <FilmsPage mode='search' />
+            }
 
         </div>
     );

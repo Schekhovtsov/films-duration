@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withProviders } from './providers';
 import { Layout, Menu } from "antd";
+import { Link, NavLink } from 'react-router-dom';
 const { Header, Footer } = Layout;
 
 
@@ -30,11 +31,10 @@ function App() {
             <Wrapper>
             <Header>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-                    <Menu.Item key={1}>Home</Menu.Item>
-                    <Menu.Item key={2}>TOP-250</Menu.Item>
+                    <Menu.Item key={1}><NavLink to='/'>Home</NavLink></Menu.Item>
+                    <Menu.Item key={2}><NavLink to='/top'>TOP-250</NavLink></Menu.Item>
                 </Menu>
             </Header>
-
 
             <Content>
                 <Routing/>

@@ -59,7 +59,7 @@ class FilmsStore {
         try {
 
             for await (let id of this.filmsID) {
-                const response = await api.getSpecificFilm(id);
+                const response = await api.getFilmByID(id);
                 this.films = [...this.films, response.data];
             }
 
@@ -75,6 +75,17 @@ class FilmsStore {
             this.isLoading = false;
         }
     }
+
+    getFilmsBySearch = async (title: string) => {
+        try {
+            let response = await api.getFilmByTitle(title);
+            this.films = response.data.results;
+
+        }   catch (e) {
+            console.log(e)
+        }
+    }
+
 }
 
 export const filmsStore = new FilmsStore()
