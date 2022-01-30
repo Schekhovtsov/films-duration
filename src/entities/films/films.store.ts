@@ -46,7 +46,7 @@ class FilmsStore {
 
             this.filmsID = temp
 
-            this.fetchDetails()
+            this.fetchDetails('top')
 
             if (!response) return console.log('Response was empty')
         }   catch (e) {
@@ -54,7 +54,7 @@ class FilmsStore {
         }
     }
 
-    fetchDetails = async () => {
+    fetchDetails = async (mode: string) => {
 
         try {
 
@@ -63,11 +63,21 @@ class FilmsStore {
                 this.films = [...this.films, response.data];
             }
 
-            this.films = this.films
-                .filter((film: IFilm) => film.vote_count > 5000)
-                .sort(function (a: IFilm, b: IFilm) {
-                    return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
-                });
+            if (mode === 'top') {
+                this.films = this.films
+                    .filter((film: IFilm) => film.vote_count > 5000)
+                    .sort(function (a: IFilm, b: IFilm) {
+                        return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
+                    });
+            }
+
+            if (mode === 'search') {
+                this.films = this.films
+                    .sort(function (a: IFilm, b: IFilm) {
+                        return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
+                    });
+            }
+
 
         }   catch (e) {
             console.log(e)
@@ -78,8 +88,20 @@ class FilmsStore {
 
     getFilmsBySearch = async (title: string) => {
         try {
+
+            this.isLoading = true;
             let response = await api.getFilmByTitle(title);
-            this.films = response.data.results;
+
+            let temp: any = []
+
+            response.data.results.map((film: IFilm) => {
+                temp = [...temp, film.id]
+            })
+
+            this.filmsID = temp
+
+            //this.films = response.data.results;
+            this.fetchDetails('search')
 
         }   catch (e) {
             console.log(e)
@@ -91,5 +113,5 @@ class FilmsStore {
 export const filmsStore = new FilmsStore()
 
 autorun(() => {
-    filmsStore.fetchTopRatedIDs(3);
+
 });
