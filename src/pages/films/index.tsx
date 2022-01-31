@@ -24,11 +24,9 @@ const FilmsPage: FC<IFilmsPageProps> = ( {mode} ) => {
         }
     }, [])
 
-
-
     return (
         <div>
-
+           
             <Title>
                 { (mode === 'top') && 'TOP-250 Films duration' }
                 { (mode === 'search') && 'Search results' }

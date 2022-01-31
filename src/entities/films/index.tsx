@@ -3,6 +3,7 @@ import {observer} from "mobx-react";
 import {IFilm} from "./films.store";
 import {Table} from "antd";
 import {useStore} from "../../app/hooks/use-store";
+import Preloader from 'shared/Preloader';
 
 const Films: FC = () => {
 
@@ -30,7 +31,6 @@ const Films: FC = () => {
                         style: {
                             background:
                                 runtime.substring(0, 3) > 160 ? '#ffd6d6'
-                                    /*: runtime.substring(0, 3) <= 120 ? '#fdebcc'*/
                                     : runtime.substring(0, 3) <= 100 ? '#e2ffd8' : '#fdebcc' }
                     },
                     children: <div>{runtime}</div>
@@ -59,7 +59,8 @@ const Films: FC = () => {
 
         <div>
 
-
+            {isLoading && <Preloader />}
+            
 
             {
                 (!isLoading && films) &&
