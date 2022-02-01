@@ -10,6 +10,7 @@ export interface IFilm {
     release_date: string,
     runtime: number,
     popularity: number,
+    genres: object[]
 }
 
 class FilmsStore {
@@ -26,6 +27,8 @@ class FilmsStore {
 
         try {
             this.isLoading = true
+            this.filmsID = []
+            this.films = []
 
             let pagesArray: number[] = []
 
@@ -90,6 +93,9 @@ class FilmsStore {
         try {
 
             this.isLoading = true;
+            this.filmsID = []
+            this.films = []
+
             let response = await api.getFilmByTitle(title);
 
             let temp: any = []

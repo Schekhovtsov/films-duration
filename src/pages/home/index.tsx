@@ -44,7 +44,7 @@ const HomePage: FC = () => {
             <Divider dashed />
 
             <List
-                grid={{ gutter: 16, column: 2 }}
+                grid={{ gutter: 16, column: 1 }}
                 dataSource={[
                     {
                         title: 'Find out the duration of the movie',

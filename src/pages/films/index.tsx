@@ -20,7 +20,7 @@ const FilmsPage: FC<IFilmsPageProps> = ( {mode} ) => {
             fetchTopRatedIDs(3)
         }
         if (mode === 'search') {
-            alert('це поиск дядь')
+            
         }
     }, [])
 

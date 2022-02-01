@@ -40,7 +40,7 @@ function App() {
                 <Routing/>
             </Content>
 
-            <Footer style={{textAlign: 'center'}}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Footer style={{textAlign: 'center'}}>Films Duration © 2022 <br /> Created by Schekhovtsov</Footer>
             </Wrapper>
         </Layout>
     );
