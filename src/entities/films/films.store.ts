@@ -1,4 +1,4 @@
-import {makeAutoObservable, runInAction, autorun, computed, toJS } from "mobx";
+import { autorun, makeAutoObservable } from "mobx";
 import { api } from "shared/api/";
 
 export interface IFilm {
@@ -17,7 +17,8 @@ class FilmsStore {
 
     isLoading = false
     filmsID: any = []
-    films: any = []
+    films: IFilm[] = []
+    film: any
 
     constructor() {
         makeAutoObservable(this)
@@ -29,6 +30,7 @@ class FilmsStore {
             this.isLoading = true
             this.filmsID = []
             this.films = []
+            this.film = {}
 
             let pagesArray: number[] = []
 
@@ -38,7 +40,7 @@ class FilmsStore {
 
             let requests = pagesArray.map(page => api.getTopRated(page));
 
-            let temp: any = []
+            let temp: any[] = []
 
             let response = await Promise.all(requests)
             response.map((r) => {
@@ -57,15 +59,24 @@ class FilmsStore {
         }
     }
 
-    fetchDetails = async (mode: string) => {
+    fetchDetails = async (mode?: string, id?: number) => {
 
         try {
 
-            for await (let id of this.filmsID) {
+            if (id === undefined) {
+                for await (let id of this.filmsID) {
+                    const response = await api.getFilmByID(id);
+                    this.films = [...this.films, response.data];
+                }
+            }   else    {
                 const response = await api.getFilmByID(id);
-                this.films = [...this.films, response.data];
+                this.film = response.data;
             }
 
+            
+           
+
+    
             if (mode === 'top') {
                 this.films = this.films
                     .filter((film: IFilm) => film.vote_count > 5000)
@@ -117,7 +128,3 @@ class FilmsStore {
 }
 
 export const filmsStore = new FilmsStore()
-
-autorun(() => {
-
-});

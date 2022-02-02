@@ -5,6 +5,7 @@ import {Table} from "antd";
 import {useStore} from "../../app/hooks/use-store";
 import Preloader from 'shared/Preloader';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Films: FC = () => {
 
@@ -77,7 +78,9 @@ const Films: FC = () => {
                         <Poster src={`https://www.themoviedb.org/t/p/w220_and_h330_face`+film.poster_path} alt='' />
                     </div>
                     <InfoWrapper>
-                        <FilmTitle>{film.title}</FilmTitle>
+                        <FilmTitle>
+                            <Link to={`/film/${film.id}`}>{film.title}</Link>
+                        </FilmTitle>
                         <div>{film.release_date.substring(0, 4)}
                         ,&nbsp;
                         <FilmGenres>

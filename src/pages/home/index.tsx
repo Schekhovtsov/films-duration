@@ -6,6 +6,7 @@ import {Divider, Typography, List, Card, Input} from "antd";
 import { Link } from 'react-router-dom';
 import {filmsStore} from "../../entities/films/films.store";
 import FilmsPage from "../films";
+import { useStore } from 'app/hooks/use-store';
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
 
@@ -14,20 +15,20 @@ const { Search } = Input;
 const HomePage: FC = () => {
 
 
-
     const Text_Big = styled.div`
       font-size: 16pt;
     `;
 
     const Text_Small = styled.div`
-        font-size: 14pt;
+      font-size: 14pt;
       padding: 10px 0;
     `;
 
+    const { getFilmsBySearch } = useStore();
     const [wasSearched, setWasSearched] = useState(false);
 
     const onSearch = (title: string) => {
-        filmsStore.getFilmsBySearch(title)
+        getFilmsBySearch(title)
         setWasSearched(true)
     }
 

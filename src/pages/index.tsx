@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { FilmPage } from "./filmPage";
 import FilmsPage from "./films";
 import HomePage from "./home";
 
@@ -7,6 +8,7 @@ export const Routing = () => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/top" element={<FilmsPage mode='top' />} />
+            <Route path="/film/:filmID" element={<FilmPage />} />
         </Routes>
     );
 };
