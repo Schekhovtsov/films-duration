@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { FilmPage } from "./filmPage";
-import FilmsPage from "./films";
-import HomePage from "./home";
+import {FilmsPage} from "./films";
+import {HomePage} from "./home";
 
 export const Routing = () => {
     return (

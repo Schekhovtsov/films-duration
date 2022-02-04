@@ -1,3 +1,4 @@
+import { withSuccess } from "antd/lib/modal/confirm";
 import { autorun, makeAutoObservable } from "mobx";
 import { api } from "shared/api/";
 
@@ -19,6 +20,8 @@ class FilmsStore {
     filmsID: any = []
     films: IFilm[] = []
     film: any
+    isInit = false
+    wasSearched = false
 
     constructor() {
         makeAutoObservable(this)
@@ -93,10 +96,17 @@ class FilmsStore {
             }
 
 
+
         }   catch (e) {
             console.log(e)
         }   finally {
             this.isLoading = false;
+            if (this.wasSearched) {
+                this.isInit = false;
+            }   else    {
+                this.isInit = true;
+            }
+            this.wasSearched = false;
         }
     }
 
@@ -120,8 +130,12 @@ class FilmsStore {
             //this.films = response.data.results;
             this.fetchDetails('search')
 
+            this.wasSearched = true
+
         }   catch (e) {
             console.log(e)
+        }   finally {
+            
         }
     }
 

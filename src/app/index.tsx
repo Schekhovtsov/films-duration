@@ -32,7 +32,7 @@ function App() {
             <Header>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
                     <Menu.Item key={1}><NavLink to='/'>Home</NavLink></Menu.Item>
-                    <Menu.Item key={2}><NavLink to='/top'>TOP-250</NavLink></Menu.Item>
+                    <Menu.Item key={2}><NavLink to='/top'>TOP Films</NavLink></Menu.Item>
                 </Menu>
             </Header>
 

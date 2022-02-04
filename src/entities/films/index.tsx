@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import {observer} from "mobx-react";
 import {IFilm} from "./films.store";
-import {Table} from "antd";
+import {Pagination, Table} from "antd";
 import {useStore} from "../../app/hooks/use-store";
 import Preloader from 'shared/Preloader';
 import styled from 'styled-components';
@@ -95,7 +95,7 @@ export const Films: FC = observer(() => {
 
         <div>
 
-            {isLoading && <Preloader />}
+            {isLoading && (<Preloader />)}
             
 
             {

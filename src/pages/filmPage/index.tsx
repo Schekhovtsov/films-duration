@@ -46,6 +46,8 @@ export const FilmPage: FC = observer(() => {
     return hours + ' hours ' + minutes + ' min';
 }
 
+
+
   return (
     <div>
       {film && (

@@ -5,14 +5,15 @@ import styled from 'styled-components';
 import {Divider, Typography, List, Card, Input} from "antd";
 import { Link } from 'react-router-dom';
 import {filmsStore} from "../../entities/films/films.store";
-import FilmsPage from "../films";
+import { FilmsPage } from "../films";
 import { useStore } from 'app/hooks/use-store';
+import { observer } from 'mobx-react-lite';
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
 
 
 
-const HomePage: FC = () => {
+export const HomePage: FC = observer(() => {
 
 
     const Text_Big = styled.div`
@@ -72,6 +73,4 @@ const HomePage: FC = () => {
 
         </div>
     );
-};
-
-export default HomePage;
+})

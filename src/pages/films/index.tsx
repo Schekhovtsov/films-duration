@@ -3,6 +3,7 @@ import {Films} from 'entities/films';
 import {Input, Typography} from "antd";
 import {filmsStore, IFilm} from "../../entities/films/films.store";
 import { useStore } from 'app/hooks/use-store';
+import { observer } from 'mobx-react-lite';
 
 const { Title, Paragraph } = Typography;
 const { Search } = Input;
@@ -11,16 +12,13 @@ interface IFilmsPageProps {
     mode: string
 }
 
-const FilmsPage: FC<IFilmsPageProps> = ( {mode} ) => {
+export const FilmsPage: FC<IFilmsPageProps> = observer(( {mode} ) => {
 
-    const { fetchTopRatedIDs } = useStore();
+    const { fetchTopRatedIDs, isInit, wasSearched } = useStore();
 
     useEffect(() => {
-        if (mode === 'top') {
+        if (mode === 'top' && !isInit && !wasSearched) {
             fetchTopRatedIDs(3)
-        }
-        if (mode === 'search') {
-            
         }
     }, [])
 
@@ -28,14 +26,12 @@ const FilmsPage: FC<IFilmsPageProps> = ( {mode} ) => {
         <div>
 
             <Title>
-                { (mode === 'top') && 'TOP-250 Films duration' }
-                { (mode === 'search') && 'Search results' }
+                { (mode === 'top') && 'TOP Films duration' }
+                { (mode === 'search') && '' }
             </Title>
 
             <Films />
 
         </div>
     );
-};
-
-export default FilmsPage;
+})
