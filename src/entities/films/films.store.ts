@@ -59,7 +59,7 @@ class FilmsStore {
         }
     }
 
-    fetchDetails = async (mode?: string, id?: number) => {
+    fetchDetails = async (mode: string, id?: number) => {
 
         try {
 
@@ -72,10 +72,6 @@ class FilmsStore {
                 const response = await api.getFilmByID(id);
                 this.film = response.data;
             }
-
-            
-           
-
     
             if (mode === 'top') {
                 this.films = this.films
@@ -90,6 +86,10 @@ class FilmsStore {
                     .sort(function (a: IFilm, b: IFilm) {
                         return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
                     });
+            }
+
+            if (mode === 'page') {
+                // Do nothing
             }
 
 

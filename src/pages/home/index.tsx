@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import Films from 'entities/films';
+import {Films} from 'entities/films';
 import styled from 'styled-components';
 
 import {Divider, Typography, List, Card, Input} from "antd";

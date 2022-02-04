@@ -7,7 +7,7 @@ import Preloader from 'shared/Preloader';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Films: FC = () => {
+export const Films: FC = observer(() => {
 
     const { films, isLoading } = useStore();
 
@@ -27,25 +27,19 @@ const Films: FC = () => {
             dataIndex: 'runtime',
             defaultSortOrder: 'descend',
             sorter: (a: any, b: any) => a.runtime - b.runtime,
-            render(runtime: any) {
+            onCell: ({runtime}: any) => {
                 return {
-                    props: {
+                   
                         style: {
                             background:
                                 runtime.substring(0, 3) > 160 ? '#ffd6d6'
                                     : runtime.substring(0, 3) <= 100 ? '#e2ffd8' : '#fdebcc' }
-                    },
-                    children: <div>{runtime}</div>
+                    
+                   
                 };
             }
         },
     ];
-
-    const minToHours = (mins: number) => {
-        let hours = Math.trunc(mins/60);
-        let minutes = mins % 60;
-        return hours + ' hours ' + minutes + ' min';
-    }
 
     const FilmTitleWrapper = styled.div`
         display: flex;
@@ -116,6 +110,4 @@ const Films: FC = () => {
             }
         </div>
     );
-};
-
-export default observer(Films);
+})

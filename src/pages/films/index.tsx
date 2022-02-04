@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import Films from 'entities/films';
+import {Films} from 'entities/films';
 import {Input, Typography} from "antd";
 import {filmsStore, IFilm} from "../../entities/films/films.store";
 import { useStore } from 'app/hooks/use-store';
@@ -26,7 +26,7 @@ const FilmsPage: FC<IFilmsPageProps> = ( {mode} ) => {
 
     return (
         <div>
-           
+
             <Title>
                 { (mode === 'top') && 'TOP-250 Films duration' }
                 { (mode === 'search') && 'Search results' }
