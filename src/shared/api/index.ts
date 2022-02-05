@@ -34,7 +34,7 @@ export const api = {
     },
 
     getFilmByTitle(title: string) {
-        return instance.get<any>(`/search/movie/`,
+        return instance.get<any>(`/search/movie`,
             {
                 params: {
                     ...API_DEFAULT_PARAMS,
