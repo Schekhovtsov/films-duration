@@ -2,38 +2,42 @@ import axios from "axios";
 
 const BASE_URL = 'https://api.themoviedb.org/3';
 
+export const API_DEFAULT_PARAMS = {
+    api_key: 'a81d483beac43413cccb26601a9febdd',
+    language: 'en-US',
+    region: 'US',
+}
+
+const instance = axios.create({
+    baseURL: 'https://api.themoviedb.org/3',
+  });
+
 export const api = {
 
     getTopRated(page = 1) {
-        return axios.get<any>(`${BASE_URL}/movie/top_rated`,
+        return instance.get<any>(`/movie/top_rated`,
             {
                 params: {
-                    api_key: 'a81d483beac43413cccb26601a9febdd',
-                    language: 'en-US',
-                    region: 'US',
+                    ...API_DEFAULT_PARAMS,
                     page: page,
                 },
             });
     },
 
     getFilmByID(id: number) {
-        return axios.get<any>(`${BASE_URL}/movie/${id}`,
-            {
-                params: {
-                    api_key: 'a81d483beac43413cccb26601a9febdd',
-                    language: 'en-US',
-                    region: 'US',
-                },
-            });
+        return instance.get<any>(`/movie/${id}`,
+        {
+            params: {
+                ...API_DEFAULT_PARAMS,
+            },
+        });
     },
 
     getFilmByTitle(title: string) {
-        return axios.get<any>(`${BASE_URL}/search/movie/`,
+        return instance.get<any>(`/search/movie/`,
             {
                 params: {
-                    api_key: 'a81d483beac43413cccb26601a9febdd',
-                    language: 'en-US',
-                    region: 'US',
+                    ...API_DEFAULT_PARAMS,
                     query: title,
                 },
             });

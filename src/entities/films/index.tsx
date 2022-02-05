@@ -95,7 +95,7 @@ export const Films: FC = observer(() => {
 
         <div>
 
-            {isLoading && (<Preloader />)}
+            {films.length < 9 && (<Preloader />)}
             
 
             {
