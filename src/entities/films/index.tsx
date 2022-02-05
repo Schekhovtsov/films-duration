@@ -46,10 +46,22 @@ export const Films: FC = observer(() => {
         flex-direction: row;
     `;
 
+    const PosterWrapper = styled.div`
+      @media (max-width: 800px) {
+        display: none;
+      }
+    `;
+
+    const Poster = styled.img`
+      width: 40px;
+    `;
+
     const InfoWrapper = styled.div`
         display: flex;
         flex-direction: column;
-        margin-left: 20px;
+        @media (min-width: 800px) {
+            margin-left: 20px;
+        }
     `;
 
     const FilmTitle = styled.div`
@@ -61,26 +73,24 @@ export const Films: FC = observer(() => {
         font-style: italic;
     `;
 
-    const Poster = styled.img`
-        width: 40px;
-    `;
+  
 
     const data: any = films.map((film: IFilm, index: number) => ({
         key: `${film}_${index}`,
         title:  <FilmTitleWrapper>
-                    <div>
+                    <PosterWrapper>
                         <Poster src={`https://www.themoviedb.org/t/p/w220_and_h330_face`+film.poster_path} alt='' />
-                    </div>
+                    </PosterWrapper>
                     <InfoWrapper>
                         <FilmTitle>
                             <Link to={`/film/${film.id}`}>{film.title}</Link>
                         </FilmTitle>
-                        <div>{film.release_date.substring(0, 4)}
-                        ,&nbsp;
-                        <FilmGenres>
-                        { film.genres.map((genre: any, index: number) => genre.name + ' ') }
-                        </FilmGenres> 
-                        
+                        <div>
+                            {film.release_date.substring(0, 4)}
+                            ,&nbsp;
+                            <FilmGenres>
+                            { film.genres.map((genre: any, index: number) => genre.name + ' ') }
+                            </FilmGenres> 
                         </div>
                     </InfoWrapper>
                 </FilmTitleWrapper>,

@@ -49,9 +49,9 @@ export const HomePage: FC = observer(() => {
                 grid={{ gutter: 16, column: 1 }}
                 dataSource={[
                     {
-                        title: 'Find out the duration of the movie',
+                        title: 'Search the movie by title',
                         content: <Search
-                            placeholder="Enter the name of the movie"
+                            placeholder="e.g. Godfather"
                             allowClear
                             enterButton="Search"
                             size="large"

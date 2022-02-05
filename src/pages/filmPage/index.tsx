@@ -19,17 +19,38 @@ export const FilmPage: FC = observer(() => {
     padding: 30px;
   `;
 
+
   const BodyWrapper = styled.div`
     display: flex;
     flex-direction: row;
+    @media (max-width: 720px) {
+      flex-direction: column;
+      }
+  `;
+
+  const PosterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
   `;
 
   const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 14pt;
-  padding: 0 20px;
-`;
+    display: flex;
+    flex-direction: column;
+    font-size: 14pt;
+    padding: 0 20px;
+  `;
+
+  const MovieTitle = styled.div`
+    font-size: 24pt;
+    font-weight: bold;
+    padding-bottom: 20px;
+      @media (max-width: 720px) {
+        font-size: 18pt;
+        
+      }
+  `;
+
 
   let params = useParams();
   const { fetchDetails, film, isLoading } = useStore();
@@ -41,26 +62,33 @@ export const FilmPage: FC = observer(() => {
   }, []);
 
   const minToHours = (mins: number) => {
-    let hours = Math.trunc(mins/60);
+    let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
-    return hours + ' hours ' + minutes + ' min';
-}
-
-
+    return hours + " hours " + minutes + " min";
+  };
 
   return (
     <div>
       {film && (
         <FilmWrapper>
           <Content>
-            <Title>{film.title}</Title>
+            <MovieTitle>{film.title}</MovieTitle>
             <BodyWrapper>
-              <div><img src={`https://www.themoviedb.org/t/p/w220_and_h330_face`+film.poster_path} /></div>
+              <PosterWrapper>
+                <img
+                  src={
+                    `https://www.themoviedb.org/t/p/w220_and_h330_face` +
+                    film.poster_path
+                  }
+                />
+              </PosterWrapper>
               <InfoWrapper>
                 <div>Title: {film.title}</div>
                 <div>Release date: {film.release_date}</div>
                 <div>&nbsp;</div>
-                <div>Runtime: {film.runtime} minutes ({minToHours(film.runtime)})</div>
+                <div>
+                  Runtime: {film.runtime} minutes ({minToHours(film.runtime)})
+                </div>
               </InfoWrapper>
             </BodyWrapper>
           </Content>
