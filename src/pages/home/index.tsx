@@ -15,16 +15,6 @@ const { Search } = Input;
 
 export const HomePage: FC = observer(() => {
 
-
-    const Text_Big = styled.div`
-      font-size: 16pt;
-    `;
-
-    const Text_Small = styled.div`
-      font-size: 14pt;
-      padding: 10px 0;
-    `;
-
     const { getFilmsBySearch } = useStore();
     const [wasSearched, setWasSearched] = useState(false);
 
@@ -74,3 +64,12 @@ export const HomePage: FC = observer(() => {
         </div>
     );
 })
+
+const Text_Big = styled.div`
+font-size: 16pt;
+`;
+
+const Text_Small = styled.div`
+font-size: 14pt;
+padding: 10px 0;
+`;

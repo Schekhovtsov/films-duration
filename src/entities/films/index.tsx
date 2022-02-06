@@ -40,39 +40,6 @@ export const Films: FC = observer(() => {
             }
         },
     ];
-
-    const FilmTitleWrapper = styled.div`
-        display: flex;
-        flex-direction: row;
-    `;
-
-    const PosterWrapper = styled.div`
-      @media (max-width: 800px) {
-        display: none;
-      }
-    `;
-
-    const Poster = styled.img`
-      width: 40px;
-    `;
-
-    const InfoWrapper = styled.div`
-        display: flex;
-        flex-direction: column;
-        @media (min-width: 800px) {
-            margin-left: 20px;
-        }
-    `;
-
-    const FilmTitle = styled.div`
-        font-size: 14pt;
-    `;
-
-    const FilmGenres = styled.span`
-        color: ##807f7f;
-        font-style: italic;
-    `;
-
   
 
     const data: any = films.map((film: IFilm, index: number) => ({
@@ -120,3 +87,35 @@ export const Films: FC = observer(() => {
         </div>
     );
 })
+
+const FilmTitleWrapper = styled.div`
+display: flex;
+flex-direction: row;
+`;
+
+const PosterWrapper = styled.div`
+@media (max-width: 800px) {
+display: none;
+}
+`;
+
+const Poster = styled.img`
+width: 40px;
+`;
+
+const InfoWrapper = styled.div`
+display: flex;
+flex-direction: column;
+@media (min-width: 800px) {
+    margin-left: 20px;
+}
+`;
+
+const FilmTitle = styled.div`
+font-size: 14pt;
+`;
+
+const FilmGenres = styled.span`
+color: ##807f7f;
+font-style: italic;
+`;

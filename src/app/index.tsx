@@ -9,31 +9,7 @@ const { Header, Footer } = Layout;
 
 function App() {
 
-    const Content = styled.div`
-
-      margin: 20px 10px; // Телефон
-      @media (min-width: 990px) {
-        margin: 30px; // Компьютер
-      }
-      @media (min-width: 1400px) {
-        margin: 50px; // Компьютер
-      }
-    `
-
-    const Wrapper = styled.div`
-      margin: 0 auto;
-      width: 100%; // Телефон
-      @media (min-width: 990px) {
-        width: 90%; // Компьютер
-      }
-      @media (min-width: 1400px) {
-        width: 70%; // Компьютер
-      }
-    `
-
-
     return (
-
         <Layout >
             <Wrapper>
             <Header>
@@ -54,3 +30,24 @@ function App() {
 }
 
 export default withProviders(App);
+
+const Content = styled.div`
+  margin: 20px 10px; // Телефон
+  @media (min-width: 990px) {
+    margin: 30px; // Компьютер
+  }
+  @media (min-width: 1400px) {
+    margin: 50px; // Компьютер
+  }
+`;
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  width: 100%; // Телефон
+  @media (min-width: 990px) {
+    width: 90%; // Компьютер
+  }
+  @media (min-width: 1400px) {
+    width: 70%; // Компьютер
+  }
+`;

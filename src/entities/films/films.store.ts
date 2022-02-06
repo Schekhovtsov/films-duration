@@ -16,12 +16,14 @@ export interface IFilm {
 
 class FilmsStore {
 
-    isLoading = false
-    filmsID: any = []
-    films: IFilm[] = []
-    film: any
-    isInit = false
-    wasSearched = false
+    isLoading = false;
+    filmsID: any = [];
+    films: IFilm[] = [];
+    film: any;
+    filmRuntime: any;
+    isInit = false;
+    wasSearched = false;
+
 
     constructor() {
         makeAutoObservable(this)
@@ -30,25 +32,25 @@ class FilmsStore {
     fetchTopRatedIDs = async (pages = 1) => {
 
         try {
-            this.isLoading = true
-            this.filmsID = []
-            this.films = []
-            this.film = {}
+            this.isLoading = true;
+            this.filmsID = [];
+            this.films = [];
+            this.film = {};
 
-            let pagesArray: number[] = []
+            let pagesArray: number[] = [];
 
             for (let i = 1; i <= pages; i++) {
-                pagesArray.push(i)
+                pagesArray.push(i);
             }
 
             let requests = pagesArray.map(page => api.getTopRated(page));
 
-            let temp: any[] = []
+            let temp: any[] = [];
 
             let response = await Promise.all(requests)
             response.map((r) => {
                 r.data.results.map((film: IFilm) => {
-                    temp = [...temp, film.id]
+                    temp.push(film.id);
                 })
             })
 
@@ -56,7 +58,7 @@ class FilmsStore {
 
             this.fetchDetails('top')
 
-            if (!response) return console.log('Response was empty')
+            if (!response) return console.log('Response was empty');
         }   catch (e) {
             console.log(e)
         }
@@ -69,14 +71,16 @@ class FilmsStore {
             if (id === undefined) {
                 for await (let id of this.filmsID) {
                     const response = await api.getFilmByID(id);
-                    this.films = [...this.films, response.data];
+                    this.films.push(response.data);
                 }
             }   else    {
                 const response = await api.getFilmByID(id);
                 this.film = response.data;
+                this.filmRuntime = this.film.runtime;
             }
     
             if (mode === 'top') {
+           
                 this.films = this.films
                     .filter((film: IFilm) => film.vote_count > 5000)
                     .sort(function (a: IFilm, b: IFilm) {
@@ -85,6 +89,7 @@ class FilmsStore {
             }
 
             if (mode === 'search') {
+                
                 this.films = this.films
                     .sort(function (a: IFilm, b: IFilm) {
                         return a.vote_average - b.vote_average || a.vote_count - b.vote_count;
@@ -136,6 +141,12 @@ class FilmsStore {
             
         }
     }
+
+      get getHumanRuntime () {
+        const hours = Math.trunc(this.filmRuntime / 60)
+        const minutes = this.filmRuntime % 60
+        return hours + " hours " + minutes + " min"
+      }
 
 }
 
