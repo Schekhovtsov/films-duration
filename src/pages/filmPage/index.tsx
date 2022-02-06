@@ -39,6 +39,9 @@ export const FilmPage: FC = observer(() => {
     flex-direction: column;
     font-size: 14pt;
     padding: 0 20px;
+    @media (max-width: 720px) {
+      padding: 10px 0;
+    }
   `;
 
   const MovieTitle = styled.div`
@@ -67,9 +70,11 @@ export const FilmPage: FC = observer(() => {
     return hours + " hours " + minutes + " min";
   };
 
+  if ( film === undefined ) { console.log('ops') }
+
   return (
     <div>
-      {film && (
+      {film && film.poster_path != undefined && (
         <FilmWrapper>
           <Content>
             <MovieTitle>{film.title}</MovieTitle>
@@ -87,7 +92,7 @@ export const FilmPage: FC = observer(() => {
                 <div>Release date: {film.release_date}</div>
                 <div>&nbsp;</div>
                 <div>
-                  Runtime: {film.runtime} minutes ({minToHours(film.runtime)})
+                  Runtime: {minToHours(film.runtime)}
                 </div>
               </InfoWrapper>
             </BodyWrapper>

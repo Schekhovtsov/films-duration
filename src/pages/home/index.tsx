@@ -51,7 +51,7 @@ export const HomePage: FC = observer(() => {
                     {
                         title: 'Search the movie by title',
                         content: <Search
-                            placeholder="e.g. Godfather"
+                            placeholder="Godfather"
                             allowClear
                             enterButton="Search"
                             size="large"

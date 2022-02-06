@@ -96,17 +96,16 @@ class FilmsStore {
             }
 
 
-
         }   catch (e) {
             console.log(e)
         }   finally {
-            this.isLoading = false;
             if (this.wasSearched) {
                 this.isInit = false;
             }   else    {
                 this.isInit = true;
             }
             this.wasSearched = false;
+            this.isLoading = false;
         }
     }
 
@@ -127,7 +126,6 @@ class FilmsStore {
 
             this.filmsID = temp
 
-            //this.films = response.data.results;
             this.fetchDetails('search')
 
             this.wasSearched = true

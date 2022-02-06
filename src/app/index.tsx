@@ -10,7 +10,14 @@ const { Header, Footer } = Layout;
 function App() {
 
     const Content = styled.div`
-      margin: 50px;
+
+      margin: 20px 10px; // Телефон
+      @media (min-width: 990px) {
+        margin: 30px; // Компьютер
+      }
+      @media (min-width: 1400px) {
+        margin: 50px; // Компьютер
+      }
     `
 
     const Wrapper = styled.div`
