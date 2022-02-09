@@ -1,5 +1,5 @@
 import React from 'react';
-import {filmsStore} from "../../entities/films/films.store";
+import { filmsStore } from '../../entities/films/films.store';
 
 export const StoreContext = React.createContext(filmsStore);
 

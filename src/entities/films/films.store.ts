@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx';
-// eslint-disable-next-line import/no-unresolved
 import { api } from 'shared/api/';
 
 export type IFilm = {
@@ -16,17 +15,11 @@ export type IFilm = {
 
 class FilmsStore {
   isLoading = false;
-
   filmsID: any = [];
-
   films: IFilm[] = [];
-
   film: any;
-
   filmRuntime: number;
-
   isInit = false;
-
   wasSearched = false;
 
   constructor() {

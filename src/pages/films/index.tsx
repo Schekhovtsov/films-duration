@@ -1,37 +1,32 @@
-import React, {FC, useEffect} from 'react';
-import {Films} from 'entities/films';
-import {Input, Typography} from "antd";
-import {filmsStore, IFilm} from "../../entities/films/films.store";
+import { Typography } from 'antd';
 import { useStore } from 'app/hooks/use-store';
-import { observer } from 'mobx-react-lite';
+import { Films } from 'entities/films';
+import { observer } from 'mobx-react';
+import React, { FC, useEffect } from 'react';
 
-const { Title, Paragraph } = Typography;
-const { Search } = Input;
+const { Title } = Typography;
 
 interface IFilmsPageProps {
-    mode: string
+  mode: string;
 }
 
-export const FilmsPage: FC<IFilmsPageProps> = observer(( {mode} ) => {
+export const FilmsPage: FC<IFilmsPageProps> = observer(({ mode }) => {
+  const { fetchTopRatedIDs, isInit, wasSearched } = useStore();
 
-    const { fetchTopRatedIDs, isInit, wasSearched } = useStore();
+  useEffect(() => {
+    if (mode === 'top' && !isInit && !wasSearched) {
+      fetchTopRatedIDs(3);
+    }
+  }, []);
 
-    useEffect(() => {
-        if (mode === 'top' && !isInit && !wasSearched) {
-            fetchTopRatedIDs(3)
-        }
-    }, [])
+  return (
+    <div>
+      <Title>
+        {mode === 'top' && 'TOP Films duration'}
+        {mode === 'search' && ''}
+      </Title>
 
-    return (
-        <div>
-
-            <Title>
-                { (mode === 'top') && 'TOP Films duration' }
-                { (mode === 'search') && '' }
-            </Title>
-
-            <Films />
-
-        </div>
-    );
-})
+      <Films />
+    </div>
+  );
+});

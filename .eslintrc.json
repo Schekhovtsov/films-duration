@@ -18,8 +18,31 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "prettier",
+        "@typescript-eslint",
+        "react-hooks"
     ],
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    },
     "rules": {
+        "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
+        "lines-between-class-members": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "object-curly-newline": "off",
+        "import/prefer-default-export": "off",
+        "no-nested-ternary": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "import/extensions": [    
+        "error", "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     }
 }

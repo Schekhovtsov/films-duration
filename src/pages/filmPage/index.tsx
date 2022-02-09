@@ -1,40 +1,46 @@
-import { Typography } from "antd";
-import { useStore } from "app/hooks/use-store";
-import { observer } from "mobx-react-lite";
-import { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useStore } from 'app/hooks/use-store';
+import { observer } from 'mobx-react';
+import React, { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 export const FilmPage: FC = observer(() => {
-  let params = useParams();
-  const { fetchDetails, film, films, getHumanRuntime, fetchTopRatedIDs } = useStore();
+  const params = useParams();
+  const { fetchDetails, film, getHumanRuntime } = useStore();
 
-  const filmID: number = Number(params.filmID);
+  const filmID = Number(params.filmID);
 
   useEffect(() => {
-    fetchDetails("page", filmID);
+    fetchDetails('page', filmID);
   }, [filmID]);
 
   return (
     <div>
-      {film && film.poster_path != undefined && (
+      {film && film.poster_path !== undefined && (
         <FilmWrapper>
           <Content>
             <MovieTitle>{film.title}</MovieTitle>
             <BodyWrapper>
               <PosterWrapper>
                 <img
-                  src={
-                    `https://www.themoviedb.org/t/p/w220_and_h330_face` +
-                    film.poster_path
-                  }
+                  alt={film.title}
+                  src={`https://www.themoviedb.org/t/p/w220_and_h330_face${film.poster_path}`}
                 />
               </PosterWrapper>
               <InfoWrapper>
-                <div>Title: {film.title}</div>
-                <div>Release date: {film.release_date}</div>
+                <div>
+                  Title:
+                  {film.title}
+                </div>
+                <div>
+                  Release date:
+                  {film.release_date}
+                </div>
                 <div>&nbsp;</div>
-                <div>Runtime: {getHumanRuntime}</div>
+                <div>
+                  Runtime:
+                  {getHumanRuntime}
+                </div>
               </InfoWrapper>
             </BodyWrapper>
           </Content>
